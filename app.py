@@ -194,3 +194,44 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+
+def create_file_mapping(file_list):
+    file_map = {}
+    for file in file_list:
+        # Split the filename to extract IDs
+        parts = file.split()
+        ids = [part for part in parts if part[0].isdigit() and '.' in part]
+        
+        # Remove IDs from the filename
+        filename = ' '.join(parts[len(ids):])
+        
+        # Add each ID to the mapping
+        for id in ids:
+            if id not in file_map:
+                file_map[id] = []
+            file_map[id].append(filename)
+    
+    return file_map
+
+def get_files_by_id(id, file_map):
+    if id in file_map:
+        return f"ID: {id}\nFiles:\n" + "\n".join(f"- {file}" for file in file_map[id])
+    else:
+        return f"No files found for ID: {id}"
+
+# List of files from the image
+file_list = [
+
+]
+
+# Create the file mapping
+file_mapping = create_file_mapping(file_list)
+
+# Example usage
+print(get_files_by_id("12.18a", file_mapping))
+print("\n")
+print(get_files_by_id("3.03", file_mapping))
+
